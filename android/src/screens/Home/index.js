@@ -14,11 +14,10 @@ class Home extends Component {
         this.state =  {
             tambah : 0,
             kurang : 0,
-            hasil: 0
+            hasil: 0,
         }
     }
     async componentDidMount(){
-        // AsyncStorage.clear()
         try{
             const total = await AsyncStorage.getItem('total');
             console.log('total', total);
@@ -42,26 +41,72 @@ class Home extends Component {
             hasil: hasil + parseInt(tambah),
             tambah: 0
         });
+        try{
+            var rincian = await AsyncStorage.getItem('rincian');
+            if(rincian===null){
+                rincian = []
+            }else{
+                rincian = JSON.parse(rincian)
+            }
+
+            var datainput = {
+                "tambah":tambah
+            }
+            rincian.push(datainput)
+            await AsyncStorage.setItem('rincian',JSON.stringify(rincian));
+
+
+        }catch(e){
+            console.log(e);
+        }
               
        }else if(data==='kurang'){
         await this.setState({
            hasil : hasil - kurang,
            kurang: 0
         });
+        try{
+            var rincian = await AsyncStorage.getItem('rincian');
+            if(rincian===null){
+                rincian = []
+            }else{
+                rincian = JSON.parse(rincian)
+            }
+
+            var datainput = {
+                "kurang":kurang
+            }
+            rincian.push(datainput)
+            await AsyncStorage.setItem('rincian',JSON.stringify(rincian));
+
+
+        }catch(e){
+            console.log(e);
+        }
        }
     }
     async componentDidUpdate(){
         const{hasil} =  this.state;
-        console.log('hasil =>',hasil);
+       
          try{
            await  AsyncStorage.setItem('total',JSON.stringify(hasil))
         }catch(e){
             console.log(e)
         }
     }
+    hanldeResult =async () => {
+        const ri = await AsyncStorage.getItem('rincian');
+       const rs = JSON.parse(ri);
+       rs.map((data, key) => {
+           console.log('data map',data.tambah?data.tambah:data.kurang)
+       })
+    }
+
 
     render(){
         const{hasil,tambah, kurang} = this.state;
+        this.hanldeResult()
+        
         return(
             <>
             <View style={styles.containerHeader}>
