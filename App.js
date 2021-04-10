@@ -25,14 +25,28 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { Home } from './android/src/screens';
+import 'react-native-gesture-handler';
+import { 
+  Home,
+  Rincian
+ } from './android/src/screens';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
+
+const Tab = createBottomTabNavigator();
 const App= () => {
   return (
-   <>
-   <Home/>
-   </>
+    <NavigationContainer>
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Rincian" component={Rincian} />
+    </Tab.Navigator>
+  </NavigationContainer>
+  //  <>
+  //  <Home/>
+  //  </>
   );
 };
 

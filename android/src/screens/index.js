@@ -1,3 +1,4 @@
 import Home from './Home';
+import Rincian from './Rincian';
 
-export {Home};
+export {Home , Rincian};

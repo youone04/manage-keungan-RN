@@ -20,7 +20,6 @@ class Home extends Component {
     async componentDidMount(){
         try{
             const total = await AsyncStorage.getItem('total');
-            console.log('total', total);
             if(total){
                 this.setState({
                     hasil: parseInt(total)
@@ -94,25 +93,16 @@ class Home extends Component {
             console.log(e)
         }
     }
-    hanldeResult =async () => {
-        const ri = await AsyncStorage.getItem('rincian');
-       const rs = JSON.parse(ri);
-       rs.map((data, key) => {
-           console.log('data map',data.tambah?data.tambah:data.kurang)
-       })
-    }
 
 
     render(){
         const{hasil,tambah, kurang} = this.state;
-        this.hanldeResult()
         
         return(
             <>
             <View style={styles.containerHeader}>
                <View style={styles.contanerText}>
-                <Text style={styles.textClear}>clear</Text>
-                <Text style={styles.textRincian}>rinccian</Text>
+                <Text style={styles.textClear}>clear data</Text>
                </View>
             </View>
     
