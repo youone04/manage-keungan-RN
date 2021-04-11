@@ -44,6 +44,7 @@ class Rincian extends Component {
 
                 <View>
                     {
+                        dataResult.length>0?
                         dataResult.map((data , key) => {
                             return(
                                 <View key={key}>
@@ -56,7 +57,10 @@ class Rincian extends Component {
                                 </View>
                                 </View>
                             )
-                        })
+                        }):
+                        <View>
+                            <Text>Beum ada list rincian</Text>
+                        </View>
                     }
                 </View>
 

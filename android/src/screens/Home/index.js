@@ -96,6 +96,13 @@ class Home extends Component {
         }
     }
 
+    handleClearData = async() => {
+        await AsyncStorage.clear();
+        this.setState({
+            hasil: 0
+        })
+    }
+
 
     render(){
         const{hasil,tambah, kurang} = this.state;
@@ -104,9 +111,7 @@ class Home extends Component {
             <>
             <View style={styles.containerHeader}>
                <View style={styles.contanerText}>
-               <TouchableOpacity>
-               <Text style={styles.textClear}>clear data</Text>
-               </TouchableOpacity>
+               <Text  onPress={() => this.handleClearData()} style={styles.textClear}>clear data</Text>
                </View>
             </View>
     
