@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import {
-    Text, View
+    Text, 
+    View,
+    TouchableOpacity
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ViewShot from "react-native-view-shot";
+import CameraRoll from "@react-native-community/cameraroll";
 
 
 class Rincian extends Component {
     constructor(){
         super();
         this.state ={
-            dataResult : []
+            dataResult : [],
+            uri:''
         }
     }
 
@@ -29,7 +34,20 @@ class Rincian extends Component {
     }
 
     componentDidMount(){
-        this.hanldeResult()
+        this.hanldeResult();
+
+        
+    }
+   
+
+    onDownload = async () => {
+        this.refs.viewShot.capture()
+        .then(uri => {
+            CameraRoll.save(uri, 'photo')
+            .then((resp) => alert(resp))
+            .catch(err => console.log('err:', err))
+          });
+  
     }
 
     render(){
@@ -40,9 +58,13 @@ class Rincian extends Component {
             <View>
                 <View style={{marginHorizontal:10,marginVertical:10}}>
                     <Text>Rincian</Text>
+                   <TouchableOpacity>
+                   <Text onPress={() => this.onDownload()}>download</Text>
+                   </TouchableOpacity>
                 </View>
 
-                <View>
+                <ViewShot style={{backgroundColor:'white',height:824,width:824}} ref="viewShot" options={{ format: "jpg", quality: 0.9 }}>
+                <View style={{marginTop: 20,marginHorizontal: 20}}>
                     {
                         dataResult.length>0?
                         dataResult.map((data , key) => {
@@ -63,6 +85,7 @@ class Rincian extends Component {
                         </View>
                     }
                 </View>
+                </ViewShot>
 
             </View>
             
