@@ -41,12 +41,9 @@ const App= () => {
     <NavigationContainer>
     <Tab.Navigator>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Rincian" component={Rincian} />
+      <Tab.Screen name="Rincian" component={() => <Rincian/>} />
     </Tab.Navigator>
   </NavigationContainer>
-  //  <>
-  //  <Home/>
-  //  </>
   );
 };
 

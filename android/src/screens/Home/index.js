@@ -4,7 +4,8 @@ import {
     Text ,
     StyleSheet , 
     TextInput , 
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -18,6 +19,7 @@ class Home extends Component {
         }
     }
     async componentDidMount(){
+        // await AsyncStorage.clear()
         try{
             const total = await AsyncStorage.getItem('total');
             if(total){
@@ -102,11 +104,14 @@ class Home extends Component {
             <>
             <View style={styles.containerHeader}>
                <View style={styles.contanerText}>
-                <Text style={styles.textClear}>clear data</Text>
+               <TouchableOpacity>
+               <Text style={styles.textClear}>clear data</Text>
+               </TouchableOpacity>
                </View>
             </View>
     
-            <View style={styles.containerCardHasil}> 
+           <ScrollView>
+           <View style={styles.containerCardHasil}> 
                 <Text>hasil : {hasil}</Text>
             </View>
             <View>
@@ -124,6 +129,7 @@ class Home extends Component {
                 </TouchableOpacity>
     
             </View>
+           </ScrollView>
             
     
             </>
