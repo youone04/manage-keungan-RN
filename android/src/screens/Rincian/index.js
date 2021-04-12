@@ -73,8 +73,15 @@ class Rincian extends Component {
                                 <View style={{marginHorizontal:10}}>
                                 {
                                     data.tambah?
-                                    <Text style={{color:'green',fontSize:17}}>Pemasukan = Rp. {data.tambah}</Text>:
+                                    <View style={{marginBottom: 0}}>
+                                    <Text style={{color:'green',fontSize:17}}>Pemasukan = Rp. {data.tambah}</Text>
+                                    <Text style={{color:'green',fontSize:17}}>keterangan {data.keterangan}</Text>
+                                    </View>:
+
+                                    <View style={{marginBottom: 0}}>
                                     <Text style={{color:'red',fontSize:17}}>Pengeluaran = Rp. {data.kurang}</Text>
+                                    <Text style={{color:'red',fontSize:17}}>keterangan =  {data.keterangan}</Text>
+                                    </View>
                                 }
                                 </View>
                                 </View>

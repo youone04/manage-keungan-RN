@@ -16,6 +16,7 @@ class Home extends Component {
             tambah : 0,
             kurang : 0,
             hasil: 0,
+            keterangan:''
         }
     }
     async componentDidMount(){
@@ -36,11 +37,12 @@ class Home extends Component {
     handleButton = async(data) =>{
         const datas = await AsyncStorage.getItem('total');
         console.log('data =>',datas)
-        const{hasil,tambah,kurang} = this.state;
+        const{hasil,tambah,kurang,keterangan} = this.state;
        if(data==='tambah'){
         await this.setState({
             hasil: hasil + parseInt(tambah),
-            tambah: 0
+            tambah: 0,
+            keterangan:''
         });
         try{
             var rincian = await AsyncStorage.getItem('rincian');
@@ -51,7 +53,8 @@ class Home extends Component {
             }
 
             var datainput = {
-                "tambah":tambah
+                "tambah":tambah,
+                "keterangan": keterangan
             }
             rincian.push(datainput)
             await AsyncStorage.setItem('rincian',JSON.stringify(rincian));
@@ -64,7 +67,8 @@ class Home extends Component {
        }else if(data==='kurang'){
         await this.setState({
            hasil : hasil - kurang,
-           kurang: 0
+           kurang: 0,
+           keterangan:''
         });
         try{
             var rincian = await AsyncStorage.getItem('rincian');
@@ -75,7 +79,8 @@ class Home extends Component {
             }
 
             var datainput = {
-                "kurang":kurang
+                "kurang":kurang,
+                "keterangan": keterangan
             }
             rincian.push(datainput)
             await AsyncStorage.setItem('rincian',JSON.stringify(rincian));
@@ -105,7 +110,7 @@ class Home extends Component {
 
 
     render(){
-        const{hasil,tambah, kurang} = this.state;
+        const{hasil,tambah, kurang ,keterangan} = this.state;
         
         return(
             <>
@@ -119,19 +124,33 @@ class Home extends Component {
            <View style={styles.containerCardHasil}> 
                 <Text>hasil : {hasil}</Text>
             </View>
+
+            <View>
+                <TextInput  
+                multiline
+                numberOfLines={4}
+                style={{textAlignVertical : "top" }}
+                value={keterangan} 
+                onChangeText={(text) => this.setState({keterangan:text})} 
+                style={styles.textInput} placeholder="keterangan"/>
+            </View>
+
+
             <View>
                 <TextInput value={tambah} onChangeText={(text) => this.setState({tambah:text})} style={styles.textInput} placeholder="pemasukan"/>
+               {tambah.length>0 && keterangan.length >0?
                 <TouchableOpacity onPress={() => this.handleButton('tambah')} style={styles.buttoPlus}>
-                    <Text style={styles.textPlus}>Pemasukan</Text>
-                </TouchableOpacity>
+                <Text style={styles.textPlus}>Pemasukan</Text>
+            </TouchableOpacity>:<></>}
     
             </View>
     
             <View>
                 <TextInput value={kurang} onChangeText={(text) => this.setState({kurang:text})} style={styles.textInput} placeholder="pemasukan"/>
+                {kurang.length > 0 && keterangan.length >0?
                 <TouchableOpacity onPress={() => this.handleButton('kurang') } style={styles.buttoPlus}>
-                    <Text style={styles.textPlus}>Pengeluaran</Text>
-                </TouchableOpacity>
+                <Text style={styles.textPlus}>Pengeluaran</Text>
+            </TouchableOpacity>:<></>}
     
             </View>
            </ScrollView>
